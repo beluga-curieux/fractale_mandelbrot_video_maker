@@ -1,9 +1,10 @@
 import os
-
+from time import strftime
+from datetime import datetime
 import PIL.Image
 
 
-size = 100_000, 100_000
+size = 1_000, 1_000
 axe_x = -2, 2
 axe_y = -2, 2
 
@@ -47,19 +48,19 @@ def pixel_to_complex(x: int, y: int) -> complex:
 def gen_plusieur():
     global max_iteration
 
-    repertoire = f"julia_c={c_global}_evolution"
+    repertoire = f"julia_c={c_global} {strftime('%Y-%m-%d_%H-%M-%S', datetime.now().timetuple())}"
 
     if not os.path.exists(repertoire):
         os.makedirs(repertoire)
 
-    for loop in range(0, 30):
+    for loop in range(1, 30):
         max_iteration = loop
         julia(c_global)
         img.save(repertoire + f"/julia_c={c_global}_size={size}_pres={max_iteration}_axex={axe_x}_axe_y={axe_y}.png")
 
 
 def main():
-    julia(c_global)
+    gen_plusieur()
     img.save(f"julia_c={c_global}_size={size}_pres={max_iteration}_axex={axe_x}_axe_y={axe_y}.png")
 
     img.show()

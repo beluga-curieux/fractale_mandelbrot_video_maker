@@ -1,11 +1,11 @@
 import PIL.Image
 
 
-size = 5_000, 5_000
+size = 3_000, 3_000
 axe_x = -2, 2
 axe_y = -2, 2
 
-max_iteration = 40
+max_iteration = 60
 
 x_len = axe_x[1] - axe_x[0]
 y_len = axe_y[1] - axe_y[0]

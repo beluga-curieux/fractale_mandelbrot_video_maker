@@ -1,10 +1,13 @@
+import os
+
 import PIL.Image
 
 
-size = 10_000, 10_000
-axe_x = -2, 2
-axe_y = -2, 2
+size = 5_000, 5_000
+axe_x = -4, 4
+axe_y = -4, 4
 
+c_global = -1.755
 max_iteration = 100
 
 x_len = axe_x[1] - axe_x[0]
@@ -15,9 +18,6 @@ img = PIL.Image.new('RGB', size)
 
 def julia(c: complex | complex):
     for x in range(size[0]):
-        if not x % 100:
-            print("\r", int(100*(x/size[0])), end="")
-
         for y in range(size[1]):
 
             z = pixel_to_complex(x, y)
@@ -44,12 +44,16 @@ def pixel_to_complex(x: int, y: int) -> complex:
 
 def main():
     global max_iteration
-    c = -1.755
 
-    julia(c)
+    repertoire = f"julia_c={c_global}_evolution"
 
-    img.show()
-    img.save(f"julia_c={c}.png")
+    if not os.path.exists(repertoire):
+        os.makedirs(repertoire)
+
+    for loop in range(0, 30):
+        max_iteration = loop
+        julia(c_global)
+        img.save(repertoire + f"/julia_c={c_global}_size={size}_pres={max_iteration}_axex={axe_x}_axe_y={axe_y}.png")
 
 
 if __name__ == '__main__':

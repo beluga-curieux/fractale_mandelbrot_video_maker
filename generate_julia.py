@@ -9,7 +9,9 @@ size = 1_920 * 2, 1_080 * 2
 axe_x = -2, 2
 axe_y = -2, 2
 
-c_global = -1.755
+# c_global = -1.755
+c_global = 1.452
+
 max_iteration = 100
 tollerense = 4
 
@@ -75,7 +77,7 @@ def gen_plusieur():
 
 
 def main():
-    center_ortonorme(1)
+    center_ortonorme()
     gen_plusieur()
     # img.save(f"julia_c={c_global}_size={size}_pres={max_iteration}_axex={axe_x}_axe_y={axe_y}.png")
 

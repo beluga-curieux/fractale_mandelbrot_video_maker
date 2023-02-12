@@ -18,14 +18,13 @@ pas = 25
 finit = (1_000, 1_000)
 
 video_resolution = 2000, 2000
-video_title = f"video {strftime('%Y-%m-%d_%H-%M-%S', datetime.now().timetuple())}"
+video_title = f"video {strftime('%Y-%m-%d_%H-%M-%S', datetime.now().timetuple())}.avi"
 video = cv2.VideoWriter('video7.avi', cv2.VideoWriter_fourcc(*'MP4v'), 60, video_resolution)
 
 
 def video_init(resolution, fps=60):
-    global video_resolution, video_title, video
+    global video_resolution, video
     video_resolution = resolution
-    video_title = f"video {strftime('%Y-%m-%d_%H-%M-%S', datetime.now().timetuple())}.avi"
     video = cv2.VideoWriter(video_title, cv2.VideoWriter_fourcc(*'MP4v'), fps, video_resolution)
 
 
@@ -46,7 +45,7 @@ def video_from_dir(dir_path: str):
 
 
 def main():
-    video_from_dir("julia_c=-1.755 size=(3840, 2160) xax=(-0.5, 0.5) yax=(-0.28125, 0.28125) 2023-02-12_17-03-31")
+    video_from_dir("julia_c=-1.755 size=(3840, 2160) xax=(-0.5, 0.5) yax=(-0.28125, 0.28125) 2023-02-12_17-32-43")
 
 
 

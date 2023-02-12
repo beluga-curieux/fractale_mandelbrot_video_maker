@@ -1,11 +1,11 @@
 import PIL.Image
 
 
-size = 3_000, 3_000
+size = 10_000, 10_000
 axe_x = -2, 2
 axe_y = -2, 2
 
-max_iteration = 60
+max_iteration = 100
 
 x_len = axe_x[1] - axe_x[0]
 y_len = axe_y[1] - axe_y[0]
@@ -13,8 +13,11 @@ y_len = axe_y[1] - axe_y[0]
 img = PIL.Image.new('RGB', size)
 
 
-def julia(c: complex):
+def julia(c: complex | complex):
     for x in range(size[0]):
+        if not x % 100:
+            print("\r", int(100*(x/size[0])), end="")
+
         for y in range(size[1]):
 
             z = pixel_to_complex(x, y)
@@ -26,7 +29,7 @@ def julia(c: complex):
                 img.putpixel((x, y), (0, 0, 0))
 
 
-def test_diverge(z: complex, c: complex) -> bool:
+def test_diverge(z: complex, c: complex | int) -> bool:
     i = 0
     while z.real < 4 and i < max_iteration:
         z = (z*z)+c
@@ -41,7 +44,7 @@ def pixel_to_complex(x: int, y: int) -> complex:
 
 def main():
     global max_iteration
-    c = complex(-1.75, 0)
+    c = -1.755
 
     julia(c)
 

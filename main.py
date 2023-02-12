@@ -1,12 +1,11 @@
-import cmath
-
 import PIL.Image
 
-size = 10_000, 10_000
+
+size = 5_000, 5_000
 axe_x = -2, 2
 axe_y = -2, 2
 
-max_iteration = 20
+max_iteration = 40
 
 x_len = axe_x[1] - axe_x[0]
 y_len = axe_y[1] - axe_y[0]
@@ -42,12 +41,13 @@ def pixel_to_complex(x: int, y: int) -> complex:
 
 def main():
     global max_iteration
+    c = complex(-1.75, 0)
 
-    julia(c=complex(-1, 0))
+    julia(c)
 
     img.show()
+    img.save(f"julia_c={c}.png")
 
 
 if __name__ == '__main__':
     main()
-    

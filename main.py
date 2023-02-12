@@ -3,7 +3,7 @@ import os
 import PIL.Image
 
 
-size = 10_000, 10_000
+size = 100_000, 100_000
 axe_x = -2, 2
 axe_y = -2, 2
 

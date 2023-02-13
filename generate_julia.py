@@ -4,17 +4,18 @@ from datetime import datetime
 from PIL import Image, ImageDraw
 
 
-b = 255
+b = 200
 
-size = 1_920, 1_080
+coef = 5
+size = 1_920 * coef, 1_080 * coef
 
 axe_x = -2, 2
 axe_y = -2, 2
 
 # c_global = -1.755
-c_global = 1.452
+c_global = complex(1.452)
 
-max_iteration = 30
+max_iteration = 20
 tollerense = 4
 
 x_len = axe_x[1] - axe_x[0]
@@ -40,8 +41,6 @@ def get_color():
     pass
 
 
-
-
 def julia(c: complex | complex):
     for x in range(size[0]):
         for y in range(size[1]):
@@ -59,7 +58,8 @@ def julia(c: complex | complex):
 
 def test_diverge(z: complex, c: complex | int) -> float:
     i = 0
-    while 0-tollerense < z.imag < tollerense and 0-tollerense < z.real < tollerense and i < max_iteration:
+    # (0-tollerense < z.imag < tollerense and 0-tollerense < z.real < tollerense)
+    while abs(z) < tollerense and i < max_iteration:
         z = (z*z)+c
         i += 1
 
@@ -86,9 +86,9 @@ def gen_plusieur():
 
 
 def main():
-    center_ortonorme(4)
+    center_ortonorme(8)
 
-    julia(complex(-1.755, 0))
+    julia(c_global)
 
     img.save(f"save/julia_c={c_global}_size={size}_pres={max_iteration}_axex={axe_x}_axe_y={axe_y}.png")
 

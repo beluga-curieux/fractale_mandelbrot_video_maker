@@ -1,12 +1,14 @@
 import os
 from time import strftime
 from datetime import datetime
+
+import numpy as np
 from PIL import Image, ImageDraw
 
 
-b = 200
+b = 150
 
-coef = 5
+coef = 1
 size = 1_920 * coef, 1_080 * coef
 
 axe_x = -2, 2
@@ -15,7 +17,7 @@ axe_y = -2, 2
 # c_global = -1.755
 c_global = complex(1.452)
 
-max_iteration = 20
+max_iteration = 100
 tollerense = 4
 
 x_len = axe_x[1] - axe_x[0]
@@ -71,30 +73,30 @@ def pixel_to_complex(x: int, y: int) -> complex:
 
 
 def gen_plusieur():
-    global max_iteration
+    global max_iteration, c_global
 
-    repertoire = f"julia_c={c_global} size={size} xax={axe_x} yax={axe_y} {strftime('%Y-%m-%d_%H-%M-%S', datetime.now().timetuple())}"
+    repertoire = f"pres={max_iteration} size={size} xax={axe_x} yax={axe_y} {strftime('%Y-%m-%d_%H-%M-%S', datetime.now().timetuple())}"
 
     if not os.path.exists(repertoire):
         os.makedirs(repertoire)
 
-    for loop in range(1, 60):
+    lan = np.linspace(-2, 3, 1000)
+
+    for loop in range(len(lan)):
         print(loop)
-        max_iteration = loop
+        c_global = lan[loop]
         julia(c_global)
         img.save(repertoire + f"/{loop}.png")
 
 
 def main():
-    center_ortonorme(8)
+    center_ortonorme(5)
+    gen_plusieur()
 
-    julia(c_global)
+    # julia(c_global)
+    # img.save(f"save/julia_c={c_global}_size={size}_pres={max_iteration}_axex={axe_x}_axe_y={axe_y}.png")
 
-    img.save(f"save/julia_c={c_global}_size={size}_pres={max_iteration}_axex={axe_x}_axe_y={axe_y}.png")
-
-    # gen_plusieur()
     # img.save(f"julia_c={c_global}_size={size}_pres={max_iteration}_axex={axe_x}_axe_y={axe_y}.png")
-
 
     img.show()
 

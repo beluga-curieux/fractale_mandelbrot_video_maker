@@ -45,7 +45,7 @@ def video_from_dir(dir_path: str):
 
 
 def main():
-    video_from_dir("julia_c=-1.755 size=(3840, 2160) xax=(-0.5, 0.5) yax=(-0.28125, 0.28125) 2023-02-12_17-32-43")
+    video_from_dir("julia_c=1.452 size=(3840, 2160) xax=(-2.0, 2.0) yax=(-1.125, 1.125) 2023-02-12_17-47-36")
 
 
 

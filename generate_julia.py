@@ -1,10 +1,12 @@
 import os
 from time import strftime
 from datetime import datetime
-import PIL.Image
+from PIL import Image, ImageDraw
 
 
-size = 1_920 * 2, 1_080 * 2
+b = 255
+
+size = 1_920, 1_080
 
 axe_x = -2, 2
 axe_y = -2, 2
@@ -12,13 +14,14 @@ axe_y = -2, 2
 # c_global = -1.755
 c_global = 1.452
 
-max_iteration = 100
+max_iteration = 30
 tollerense = 4
 
 x_len = axe_x[1] - axe_x[0]
 y_len = axe_y[1] - axe_y[0]
 
-img = PIL.Image.new('RGB', size)
+img = Image.new('RGB', size)
+draw = ImageDraw.Draw(img)
 
 
 def center_ortonorme(x_axe=4):
@@ -33,6 +36,12 @@ def center_ortonorme(x_axe=4):
     y_len = axe_y[1] - axe_y[0]
 
 
+def get_color():
+    pass
+
+
+
+
 def julia(c: complex | complex):
     for x in range(size[0]):
         for y in range(size[1]):
@@ -40,17 +49,17 @@ def julia(c: complex | complex):
             z = pixel_to_complex(x, y)
 
             res = test_diverge(z, c)
-            co = int(255 - (255 * res))
+            co = int(b - (255 * res))
 
             if res:
                 img.putpixel((x, y), (co, co, co))
             else:
-                img.putpixel((x, y), (255, 255, 255))
+                img.putpixel((x, y), (b, b, b))
 
 
 def test_diverge(z: complex, c: complex | int) -> float:
     i = 0
-    while z.real < 4 and i < max_iteration:
+    while 0-tollerense < z.imag < tollerense and 0-tollerense < z.real < tollerense and i < max_iteration:
         z = (z*z)+c
         i += 1
 
@@ -77,9 +86,15 @@ def gen_plusieur():
 
 
 def main():
-    center_ortonorme()
-    gen_plusieur()
+    center_ortonorme(4)
+
+    julia(complex(-1.755, 0))
+
+    img.save(f"save/julia_c={c_global}_size={size}_pres={max_iteration}_axex={axe_x}_axe_y={axe_y}.png")
+
+    # gen_plusieur()
     # img.save(f"julia_c={c_global}_size={size}_pres={max_iteration}_axex={axe_x}_axe_y={axe_y}.png")
+
 
     img.show()
 

@@ -1,7 +1,7 @@
 import os
 from time import strftime
 from datetime import datetime
-
+from threading import Thread
 import numpy as np
 from PIL import Image, ImageDraw
 
@@ -17,7 +17,7 @@ axe_y = -2, 2
 # c_global = -1.755
 c_global = complex(1.452)
 
-max_iteration = 100
+max_iteration = 40
 tollerense = 4
 
 x_len = axe_x[1] - axe_x[0]
@@ -80,7 +80,7 @@ def gen_plusieur():
     if not os.path.exists(repertoire):
         os.makedirs(repertoire)
 
-    lan = np.linspace(-2, 3, 1000)
+    lan = np.linspace(-2, 3, 2000)
 
     for loop in range(len(lan)):
         print(loop)
@@ -89,8 +89,49 @@ def gen_plusieur():
         img.save(repertoire + f"/{loop}.png")
 
 
+def creat_and_save_julia(rep, n):
+    julia(c_global)
+    img.save(rep + f"/{n}.png")
+    print("\nfin", end=str(n))
+
+
+
+def test(repertoire, n):
+    return lambda: creat_and_save_julia(repertoire, n=n)
+
+
+def multy_threding_gen_plusieur():
+    global max_iteration, c_global
+
+    repertoire = f"th pres={max_iteration} size={size} xax={axe_x} yax={axe_y} {strftime('%Y-%m-%d_%H-%M-%S', datetime.now().timetuple())}"
+
+    if not os.path.exists(repertoire):
+        os.makedirs(repertoire)
+
+    lan = np.linspace(-2, 0, 100)
+    th_list = []
+
+    for looop in range(len(lan)):
+        c_global = lan[looop]
+
+        l = lambda: creat_and_save_julia(repertoire, n=looop)
+
+        th_list.append(Thread(target=test(repertoire, looop)))
+
+    print('\n--OK 1--\n')
+
+    for loop in th_list:
+        loop.start()
+
+    print('\n--OK 2--\n')
+
+
+
 def main():
     center_ortonorme(5)
+
+    # multy_threding_gen_plusieur()
+
     gen_plusieur()
 
     # julia(c_global)

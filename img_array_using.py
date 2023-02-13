@@ -19,7 +19,7 @@ finit = (1_000, 1_000)
 
 video_resolution = 2000, 2000
 video_title = f"video {strftime('%Y-%m-%d_%H-%M-%S', datetime.now().timetuple())}.avi"
-video = cv2.VideoWriter('video7.avi', cv2.VideoWriter_fourcc(*'MP4v'), 60, video_resolution)
+video = cv2.VideoWriter('video7.avi', cv2.VideoWriter_fourcc(*'XAVI'), 60, video_resolution)
 
 
 def video_init(resolution, fps=60):
@@ -32,7 +32,7 @@ def video_from_dir(dir_path: str):
     i = 1
     path = dir_path+"/"+str(i)+".png"
     img = PIL.Image.open(path)
-    video_init(img.size, 5)
+    video_init(img.size, 30)
 
     while os.path.exists(path):
         print(i)
@@ -45,19 +45,8 @@ def video_from_dir(dir_path: str):
 
 
 def main():
-    video_from_dir("julia_c=1.452 size=(3840, 2160) xax=(-2.0, 2.0) yax=(-1.125, 1.125) 2023-02-12_17-47-36")
 
-
-
-# while tuple(size_var) != finit and size_var[0] > finit[0] and size_var[1] > finit[1]:
-#     print("boucle", size_var, finit)
-#
-#     fram_array = array_img[border:-border, border:-border]
-#     frame = PIL.Image.fromarray(fram_array).resize(video_resolution)
-#     video.write(np.array(frame))
-#
-#     size_var = np.array(fram_array.shape[:2])
-#     border += pas
+    video_from_dir("pres=40 size=(1920, 1080) xax=(-2.5, 2.5) yax=(-1.40625, 1.40625) 2023-02-13_18-38-45")
 
 
 if __name__ == '__main__':

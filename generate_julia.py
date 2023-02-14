@@ -6,7 +6,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 
-b = 150
+bright = 150
 
 coef = 1
 size = 1_920 * coef, 1_080 * coef
@@ -50,12 +50,12 @@ def julia(c: complex | complex):
             z = pixel_to_complex(x, y)
 
             res = test_diverge(z, c)
-            co = int(b - (255 * res))
+            co = int(bright - (255 * res))
 
             if res:
                 img.putpixel((x, y), (co, co, co))
             else:
-                img.putpixel((x, y), (b, b, b))
+                img.putpixel((x, y), (bright, bright, bright))
 
 
 def test_diverge(z: complex, c: complex | int) -> float:
@@ -65,7 +65,7 @@ def test_diverge(z: complex, c: complex | int) -> float:
         z = (z*z)+c
         i += 1
 
-    return i / max_iteration
+    return i / max_iterationd
 
 
 def pixel_to_complex(x: int, y: int) -> complex:
@@ -89,48 +89,14 @@ def gen_plusieur():
         img.save(repertoire + f"/{loop}.png")
 
 
-def creat_and_save_julia(rep, n):
+def creat_and_save_julia(rep, name):
     julia(c_global)
-    img.save(rep + f"/{n}.png")
-    print("\nfin", end=str(n))
-
-
-
-def test(repertoire, n):
-    return lambda: creat_and_save_julia(repertoire, n=n)
-
-
-def multy_threding_gen_plusieur():
-    global max_iteration, c_global
-
-    repertoire = f"th pres={max_iteration} size={size} xax={axe_x} yax={axe_y} {strftime('%Y-%m-%d_%H-%M-%S', datetime.now().timetuple())}"
-
-    if not os.path.exists(repertoire):
-        os.makedirs(repertoire)
-
-    lan = np.linspace(-2, 0, 100)
-    th_list = []
-
-    for looop in range(len(lan)):
-        c_global = lan[looop]
-
-        l = lambda: creat_and_save_julia(repertoire, n=looop)
-
-        th_list.append(Thread(target=test(repertoire, looop)))
-
-    print('\n--OK 1--\n')
-
-    for loop in th_list:
-        loop.start()
-
-    print('\n--OK 2--\n')
-
+    img.save(rep + f"/{name}.png")
+    print("\nfin", end=str(name))
 
 
 def main():
     center_ortonorme(5)
-
-    # multy_threding_gen_plusieur()
 
     gen_plusieur()
 

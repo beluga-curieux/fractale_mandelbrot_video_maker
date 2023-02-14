@@ -19,7 +19,7 @@ finit = (1_000, 1_000)
 
 video_resolution = 2000, 2000
 video_title = f"video {strftime('%Y-%m-%d_%H-%M-%S', datetime.now().timetuple())}.avi"
-video = cv2.VideoWriter('video7.avi', cv2.VideoWriter_fourcc(*'XAVI'), 60, video_resolution)
+video = cv2.VideoWriter('video7.avi', cv2.VideoWriter_fourcc(*'mp4v'), 60, video_resolution)
 
 
 def video_init(resolution, fps=60):

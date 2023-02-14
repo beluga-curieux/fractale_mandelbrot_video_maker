@@ -15,7 +15,7 @@ axe_x = -2, 2
 axe_y = -2, 2
 
 # c_global = -1.755
-c_global = complex(1.452)
+c_global = complex(0, -0.8)
 
 max_iteration = 40
 tollerense = 4
@@ -65,7 +65,7 @@ def test_diverge(z: complex, c: complex | int) -> float:
         z = (z*z)+c
         i += 1
 
-    return i / max_iterationd
+    return i / max_iteration
 
 
 def pixel_to_complex(x: int, y: int) -> complex:
@@ -98,9 +98,9 @@ def creat_and_save_julia(rep, name):
 def main():
     center_ortonorme(5)
 
-    gen_plusieur()
+    # gen_plusieur()
 
-    # julia(c_global)
+    julia(c_global)
     # img.save(f"save/julia_c={c_global}_size={size}_pres={max_iteration}_axex={axe_x}_axe_y={axe_y}.png")
 
     # img.save(f"julia_c={c_global}_size={size}_pres={max_iteration}_axex={axe_x}_axe_y={axe_y}.png")

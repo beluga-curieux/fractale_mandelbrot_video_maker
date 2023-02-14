@@ -1,15 +1,15 @@
 import os
 from time import strftime, time, sleep
 from datetime import datetime
-from threading import Thread
-from multiprocessing import Process
+from multiprocessing import Process, cpu_count
 import numpy as np
 from PIL import Image, ImageDraw
 
+p_count = 0
 
 bright = 150
 
-coef = 1
+coef = 2
 size = 1_920 * coef, 1_080 * coef
 
 axe_x = -2, 2
@@ -63,16 +63,22 @@ def julia(c: complex | complex, img: Image.Image):
                 img.putpixel((x, y), (bright, bright, bright))
 
 
-
 def creat_and_save_julia(rep, name, c):
+    global p_count
+
+
     img = Image.new('RGB', size)
     julia(c, img)
     img.save(rep + f"/{name}.png")
 
 
+
 def threding_gen_plusieur(n):
+    global p_count
     lan = np.linspace(-2, 0, n)
-    th_lst = []
+
+    att_lst = []
+    run_lst = []
 
     repertoire = f"th pres={max_iteration} size={size} xax={axe_x} yax={axe_y} {strftime('%Y-%m-%d_%H-%M-%S', datetime.now().timetuple())}"
 
@@ -81,19 +87,24 @@ def threding_gen_plusieur(n):
 
     for f in range(len(lan)):
         print(f)
-        th_lst.append(Process(target=creat_and_save_julia, args=(repertoire, f, lan[f])))
+        att_lst.append(Process(target=creat_and_save_julia, args=(repertoire, f, lan[f])))
 
-    for th in th_lst:
+    for th in att_lst:
+        if len(run_lst) > 10:
+            run_lst[0].join()
+            del run_lst[0]
+
+        run_lst.append(th)
         th.start()
 
-    for th in th_lst:
+    for th in run_lst:
         th.join()
 
 
 def main():
     julia(0, Image.new('RGB', size))
 
-    threding_gen_plusieur(100)
+    threding_gen_plusieur(1000)
 
 
 if __name__ == '__main__':

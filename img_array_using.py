@@ -47,7 +47,7 @@ def video_from_dir(dir_path: str):
 
 def main():
 
-    video_from_dir("th pres=40 size=(1920, 1080) xax=(-2.0, 2.0) yax=(-1.125, 1.125) 2023-02-14   14-09-32")
+    video_from_dir("blop")
 
 
 if __name__ == '__main__':
